@@ -1,6 +1,7 @@
 const express = require('express');
 const { MongoClient, CURSOR_FLAGS } = require('mongodb');
 const cors = require('cors');
+const { application } = require('express');
 
 
 
@@ -37,6 +38,11 @@ async function run() {
 
             res.send({ count, products });
         });
+
+        //post api by keys
+        app.post('/products/byKeys', async (req, res) => {
+
+        })
     } finally {
         //await client.close();
     }
