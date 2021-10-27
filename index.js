@@ -22,6 +22,7 @@ async function run() {
         await client.connect();
         const database = client.db('ema-john');
         const productsCollections = database.collection('products');
+        const orderCollections = database.collection('orders');
         //GET PRODUCTS API
         app.get('/products', async (req, res) => {
 
@@ -39,9 +40,18 @@ async function run() {
             res.send({ count, products });
         });
 
-        //post api by keys
+        //use post to get data by keys
         app.post('/products/byKeys', async (req, res) => {
-
+            const body = req.body;
+            const keys = Object.keys(body);
+            const result = await productsCollections.find({ key: { $in: keys } }).toArray();
+            res.send(result);
+        });
+        //Add orders api
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            const result = await orderCollections.insertOne(order);
+            res.send(result);
         })
     } finally {
         //await client.close();
