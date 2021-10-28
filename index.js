@@ -1,7 +1,7 @@
 const express = require('express');
-const { MongoClient, CURSOR_FLAGS } = require('mongodb');
+const { MongoClient } = require('mongodb');
 const cors = require('cors');
-const { application } = require('express');
+
 
 
 
@@ -59,7 +59,9 @@ async function run() {
 }
 
 run().catch(console.dir);
-
+app.get('/', (req, res) => {
+    res.send('hello ema-john is here');
+})
 app.listen(port, () => {
     console.log('listening to the port ', port)
 })
